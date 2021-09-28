@@ -10,8 +10,9 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new InMemoryCarDal());
             foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine(car.Description);
+            {           
+                Console.WriteLine("Gunluk fiyat: "+car.DailyPrice);
+                Console.WriteLine(car.Description+"\n");
             }
         }
     }
