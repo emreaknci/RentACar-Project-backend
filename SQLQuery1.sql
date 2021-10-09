@@ -1,0 +1,1 @@
+﻿select c.Id, b.Name Brand,co.Name Color,c.ModelYear,c.DailyPrice,c.Description from Cars c inner join Brands b on b.Id=c.BrandId inner join Colors co on co.Id=c.ColorId

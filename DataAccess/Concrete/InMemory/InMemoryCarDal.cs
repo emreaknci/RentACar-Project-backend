@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -13,13 +14,9 @@ namespace DataAccess.Concrete.InMemory
         List<Car> _cars;
         public InMemoryCarDal()
         {
-            _cars = new List<Car>()
-            {
-                new Car(){Id=1,BrandId=1,ColorId=1,ModelYear=2021,DailyPrice=1100,Description="YENI KASA 3.20i" },
-                new Car(){Id=2,BrandId=2,ColorId=2,ModelYear=2020,DailyPrice=2000,Description="Kiralık 2020 Q7" },
-                new Car(){Id=3,BrandId=3,ColorId=3,ModelYear=2019,DailyPrice=275,Description="KASKOLU KİRALIK COROLLA DİZEL OTAMATİK VİTES" },
-                new Car(){Id=4,BrandId=4,ColorId=2,ModelYear=2019,DailyPrice=400,Description="2019 DİZEL OTOMATİK OPEL İNSİGNİA" }
-
+            _cars = new List<Car>() {
+            new Car{Id=1,BrandId=10,ColorId=1,ModelYear=1997,DailyPrice=100,Description="Car1"},
+            new Car{Id=2,BrandId=20,ColorId=2,ModelYear=1999,DailyPrice=200,Description="Car2"}
             };
         }
         public void Add(Car car)
@@ -48,21 +45,24 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
-        public List<Car> GetById(int Id)
+        public List<Car> GetById(int carId)
         {
-            _cars.Where(c => c.Id == Id).ToList();
-            return _cars;
+            return _cars.Where(c => c.Id == carId).ToList();
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
             carToUpdate.BrandId = car.BrandId;
+            carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
-            carToUpdate.ModelYear = car.ModelYear;
-
         }
     }
 }

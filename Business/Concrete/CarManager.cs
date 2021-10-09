@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DataAccess.Abstract;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -22,7 +23,6 @@ namespace Business.Concrete
             {
                 _carDal.Add(car);
                 Console.WriteLine(car.Id + " Id'li araba bilgileri basariyla eklendi!" +
-                   "\nMarka Id: " + car.BrandId +
                    "\nRenk Id: " + car.ColorId +
                    "\nModel Yili: " + car.ModelYear +
                    "\nGunluk Ucret: " + car.DailyPrice +
@@ -38,8 +38,7 @@ namespace Business.Concrete
         public void Delete(Car car)
         {
             _carDal.Delete(car);
-            Console.WriteLine(car.Id + " Id'li araba bilgileri silindi!"+
-                   "\nMarka Id: " + car.BrandId +
+            Console.WriteLine(car.Id + " Id'li araba bilgileri silindi!"+                  
                    "\nRenk Id: " + car.ColorId +
                    "\nModel Yili: " + car.ModelYear +
                    "\nGunluk Ucret: " + car.DailyPrice +
@@ -63,5 +62,9 @@ namespace Business.Concrete
         {
             return _carDal.GetAll(c => c.ColorId == Id);
         }
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }     
     }
 }
