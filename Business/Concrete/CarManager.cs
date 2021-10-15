@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.DTOs;
+using Core.Utilities.Results;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -17,54 +19,50 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.Description.Length >= 2 && car.DailyPrice > 0)
+            if (car.Description.Length <2)
             {
-                _carDal.Add(car);
-                Console.WriteLine(car.Id + " Id'li araba bilgileri basariyla eklendi!" +
-                   "\nRenk Id: " + car.ColorId +
-                   "\nModel Yili: " + car.ModelYear +
-                   "\nGunluk Ucret: " + car.DailyPrice +
-                   "\nAciklama: " + car.Description + "\n\n");
+                return new ErrorResult(Messages.CarNameInvalid);
             }
-            else if (car.Description.Length < 2 && car.DailyPrice > 0)
-                Console.WriteLine("Araba adi en az 2 harfli olmalıdır!");
-            else if (car.Description.Length >= 2 && car.DailyPrice <= 0)
-                Console.WriteLine("Kiralama bedeli 0 veya o'dan kucuk olamaz!");
-            else
-                Console.WriteLine("Araba ismi en az iki harfli , gunluk kiralama bedeli 0'dan buyuk olmalidir!");
+            else if (car.DailyPrice<0)
+            {
+                return new ErrorResult(Messages.CarPriceInvalid);
+            }
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            Console.WriteLine(car.Id + " Id'li araba bilgileri silindi!"+                  
-                   "\nRenk Id: " + car.ColorId +
-                   "\nModel Yili: " + car.ModelYear +
-                   "\nGunluk Ucret: " + car.DailyPrice +
-                   "\nAciklama: " + car.Description + "\n\n");
+            return new SuccessResult(Messages.CarDeleted);
         }
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             _carDal.Update(car);
-            Console.WriteLine(car.Id + " Id'li araba bilgileri guncellendi!");
+            return new SuccessResult(Messages.CarUpdated);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
-        public List<Car> GetCarsByBrandId(int Id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int Id)
         {
-            return _carDal.GetAll(c => c.BrandId == Id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == Id));
         }
-        public List<Car> GetCarsByColorId(int Id)
+        public IDataResult<List<Car>> GetCarsByColorId(int Id)
         {
-            return _carDal.GetAll(c => c.ColorId == Id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == Id));
         }
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarListed);
         }     
     }
 }
