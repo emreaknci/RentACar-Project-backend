@@ -61,5 +61,11 @@
     <Build Include="Cars.sql" />
     <Build Include="Colors.sql" />
     <Build Include="Brands.sql" />
+    <Build Include="Users.sql" />
+    <Build Include="Customers.sql" />
+    <Build Include="Rentals.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="RentACarDb.refactorlog" />
   </ItemGroup>
 </Project>

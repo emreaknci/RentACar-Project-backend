@@ -18,7 +18,7 @@ namespace Core.DataAccess.EntityFramework
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                context.SaveChanges();              
             }
         }
         public void Delete(TEntity entity)
