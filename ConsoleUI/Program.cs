@@ -61,7 +61,7 @@ namespace ConsoleUI
             {
                 new Rental(){Id=1,CarId=4,CustomerId=1,RentDate=new DateTime(2021,10,16)}
             };
-            
+
             //RentTest(rentals);
             //CutomerTest(customers);
             //UserTest(users);
