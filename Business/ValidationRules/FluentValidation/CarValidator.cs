@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class CarValidator: AbstractValidator<Car>
+    public class CarValidator : AbstractValidator<Car>
     {
         public CarValidator()
         {
@@ -17,6 +17,6 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.ModelYear).NotEmpty().GreaterThan(1890).LessThanOrEqualTo(DateTime.Now.Year);
         }
 
-        
+
     }
 }

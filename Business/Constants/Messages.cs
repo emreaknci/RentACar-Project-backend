@@ -45,5 +45,11 @@ namespace Business.Constants
 
 
         public static string MaintenanceTime = "Sistem bakımda";
+
+        public static string FailedCarImageAdd = "Bir aracın en 5'ten fazla fotoğrafı olamaz";
+        public static string CarImageAdded = "Araç fotoğrafı eklendi";
+        public static string CarImageDeleted = "Araç fotoğrafı silindi";
+        public static string CarImagesListed = "Fotoğraflar listelendi";
+        public static string CarImageUpdated = "Fotoğraflar güncellendi";
     }
 }
