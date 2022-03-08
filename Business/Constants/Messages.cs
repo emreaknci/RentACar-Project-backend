@@ -12,6 +12,7 @@ namespace Business.Constants
         public static string CarNameInvalid = "Araba ismi geçersiz"; 
         public static string CarPriceInvalid = "Araba kira ücreti  0'dan büyük olmalı";
         public static string CarListed = "Arabalar listelendi";
+        public static string CarDetailsListed = "Araba detayları listelendi";
         public static string CarNotAvailable = "Araba başka bir müşteri tarafından kiralandı";
 
         public static string BrandAdded = "Marka eklendi";
@@ -51,5 +52,15 @@ namespace Business.Constants
         public static string CarImageDeleted = "Araç fotoğrafı silindi";
         public static string CarImagesListed = "Fotoğraflar listelendi";
         public static string CarImageUpdated = "Fotoğraflar güncellendi";
+
+        public static string AuthorizationDenied = "Yetkiniz yok.";
+        public static string UserRegistered = "Kayıt başarılı.";
+
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+
+        public static string PasswordError = "Şifre hatalı!";
+        public static string SuccessfulLogin = "Giriş başarılı!";
+        public static string UserAlreadyExists = "Kullanıcı mevcut. ";
+        public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -14,41 +15,31 @@ namespace ConsoleUI
         {
             List<Car> cars = new List<Car>()
             {
-                new Car(){Id=1,BrandId=1,ColorId=1,ModelYear=2021,DailyPrice=1100,Description="YENI KASA 3.20i" },
-                new Car(){Id=2,BrandId=2,ColorId=2,ModelYear=2020,DailyPrice=2000,Description="Kiralık 2020 Q7" },
-                new Car(){Id=3,BrandId=3,ColorId=3,ModelYear=2019,DailyPrice=275,Description="KASKOLU KİRALIK COROLLA DİZEL OTAMATİK VİTES" },
-                new Car(){Id=4,BrandId=4,ColorId=4,ModelYear=2019,DailyPrice=400,Description="2019 DİZEL OTOMATİK OPEL İNSİGNİA" }
+                new Car(){BrandId=1,ColorId=1,ModelYear=2021,DailyPrice=1100,Description="YENI KASA 3.20i" },
+                new Car(){BrandId=2,ColorId=2,ModelYear=2020,DailyPrice=2000,Description="Kiralık 2020 Q7" },
+                new Car(){BrandId=3,ColorId=3,ModelYear=2019,DailyPrice=275,Description="KASKOLU KİRALIK COROLLA DİZEL OTAMATİK VİTES" },
+                new Car(){BrandId=4,ColorId=4,ModelYear=2019,DailyPrice=400,Description="2019 DİZEL OTOMATİK OPEL İNSİGNİA" },
+                new Car(){BrandId = 5, ColorId = 5, ModelYear = 2010, DailyPrice = 225, Description = "2010 HONDA CİVİC HASTASİNA KİRALIK" }
+
             };
-            Car car1 = new Car() { Id = 5, BrandId = 5, ColorId = 5, ModelYear = 2010, DailyPrice = 225, Description = "2010 HONDA CİVİC HASTASİNA KİRALIK" };
 
             List<Brand> brands = new List<Brand>()
             {
-                new Brand(){Id=1,Name="BMW"},
-                new Brand(){Id=2,Name="AUDI"},
-                new Brand(){Id=3,Name="TOYOTA"},
-                new Brand(){Id=4,Name="OPEL"},
-
+                new Brand(){Name="BMW"},
+                new Brand(){Name="AUDI"},
+                new Brand(){Name="TOYOTA"},
+                new Brand(){Name="OPEL"},
+                new Brand() { Name = "HONDA" }
             };
-            Brand brand1 = new Brand() { Id = 5, Name = "HONDA" };
 
             List<Color> colors = new List<Color>()
             {
-                new Color(){Id=1,Name="Kırmızı"},
-                new Color(){Id=2,Name="Siyah"},
-                new Color(){Id=3,Name="Beyaz"},
-                new Color(){Id=4,Name="Gri"},
+                new Color(){Name="Kırmızı"},
+                new Color(){Name="Siyah"},
+                new Color(){Name="Beyaz"},
+                new Color(){Name="Gri"},
+                new Color() {Name = "Mavi" }
             };
-            Color color1 = new Color() { Id = 5, Name = "Mavi" };
-
-            List<User> users = new List<User>()
-            {
-                new User(){Id=1,FirstName="Yunus Emre",LastName="Akıncı",Email="emreaknci@gmail.com",Password="12345"},
-                new User(){Id=2,FirstName="Engin ",LastName="Demirog",Email="engindemirog@gmail.com",Password="159357"},
-                new User(){Id=3,FirstName="Ali",LastName="Atay",Email="aliatay@gmail.com",Password="163435"},
-                new User(){Id=4,FirstName="Polat",LastName="Alemdar",Email="efekarahanli@gmail.com",Password="alicandan"},
-                new User(){Id=5,FirstName="Mustafa Kemal",LastName="Akıncı",Email="mustafaaknci58@gmail.com",Password="58sivas58"}
-            };
-            User user1 = new User() { Id = 5, FirstName = "Mustafa Kemal", LastName = "Akıncı", Email = "mustafaaknci58@gmail.com", Password = "58sivas58" };
 
             List<Customer> customers = new List<Customer>()
             {
@@ -65,9 +56,10 @@ namespace ConsoleUI
             //RentTest(rentals);
             //CutomerTest(customers);
             //UserTest(users);
-            //CarTest(cars);
+            ColorTest(colors);
+
+            CarTest(cars);
             //BrandTest(brands);
-            //ColorTest(colors);
 
             #region CarDetail
             //CarManager carManager = new CarManager(new EfCarDal());
@@ -101,6 +93,18 @@ namespace ConsoleUI
             #endregion
         }
 
+        private static void UserTest()
+        {
+            //List<User> users = new List<User>()
+            //{
+            //    new User(){Id=1,FirstName="Yunus Emre",LastName="Akıncı",Email="emreaknci@gmail.com",Password="12345"},
+            //    new User(){Id=2,FirstName="Engin ",LastName="Demirog",Email="engindemirog@gmail.com",Password="159357"},
+            //    new User(){Id=3,FirstName="Ali",LastName="Atay",Email="aliatay@gmail.com",Password="163435"},
+            //    new User(){Id=4,FirstName="Polat",LastName="Alemdar",Email="efekarahanli@gmail.com",Password="alicandan"},
+            //    new User(){Id=5,FirstName="Mustafa Kemal",LastName="Akıncı",Email="mustafaaknci58@gmail.com",Password="58sivas58"}
+            //};
+        }
+
         private static void RentTest(List<Rental> rentals)
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
@@ -122,7 +126,7 @@ namespace ConsoleUI
         private static void UserTest(List<User> users)
         {
             UserManager userManager = new UserManager(new EfUserDal());
-            
+
             foreach (var user in users)
             {
                 userManager.Add(user);
