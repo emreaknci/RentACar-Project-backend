@@ -11,7 +11,8 @@ namespace Business.Constants
         public static string CarDeleted = "Araba silindi";
         public static string CarNameInvalid = "Araba ismi geçersiz"; 
         public static string CarPriceInvalid = "Araba kira ücreti  0'dan büyük olmalı";
-        public static string CarListed = "Arabalar listelendi";
+        public static string CarsListed = "Arabalar listelendi";
+        public static string CarListed = "Araba listelendi";
         public static string CarDetailsListed = "Araba detayları listelendi";
         public static string CarNotAvailable = "Araba başka bir müşteri tarafından kiralandı";
 

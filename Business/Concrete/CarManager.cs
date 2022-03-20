@@ -64,7 +64,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
 
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
         public IDataResult<List<Car>> GetCarsByBrandId(int Id)
         {
@@ -82,7 +82,15 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarListed);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarsListed);
+        }
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandId(int id)
+        {
+            if (DateTime.Now.Hour == 18)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c=>c.BrandId==id), Messages.CarListed);
         }
         private IResult CheckIfDescriptionExists(string name)
         {
@@ -105,6 +113,24 @@ namespace Business.Concrete
             }
             Add(car);
             return null;
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByColorId(int id)
+        {
+            if (DateTime.Now.Hour == 18)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorId == id), Messages.CarListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByCarId(int id)
+        {
+            if (DateTime.Now.Hour == 18)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.Id == id), Messages.CarListed);
         }
     }
 }
