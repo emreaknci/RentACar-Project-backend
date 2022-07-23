@@ -10,8 +10,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public ColorValidator()
         {
-            RuleFor(c => c.Id).NotEmpty();
-            RuleFor(c => c.Name).NotEmpty();
+            RuleFor(c => c.Name).NotEmpty().WithMessage("Renk adı boş bırakılamaz.");
+            RuleFor(c => c.Name).MinimumLength(3).WithMessage("Renk adı minmum 3 haneli olmalı.");
         }
     }
 }

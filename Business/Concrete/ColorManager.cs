@@ -9,7 +9,9 @@ using Entities.Concrete;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
@@ -25,6 +27,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
+            IResult result = BusinessRules.Run(CheckIfBrandExists(color.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
@@ -35,6 +42,11 @@ namespace Business.Concrete
         }
         public IResult Update(Color color)
         {
+            IResult result = BusinessRules.Run(CheckIfBrandExists(color.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
         }
@@ -51,6 +63,17 @@ namespace Business.Concrete
         public IDataResult<Color> GetById(int Id)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(c=>c.Id == Id));
+        }
+
+        private IResult CheckIfBrandExists(string name)
+        {
+            var result = _colorDal.GetAll(p => p.Name == name).Any();
+            if (result)
+            {
+                return new ErrorResult("Bu renk zaten var");
+            }
+            return new SuccessResult();
+
         }
     }
 }

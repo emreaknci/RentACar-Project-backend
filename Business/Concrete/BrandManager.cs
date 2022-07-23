@@ -9,13 +9,15 @@ using Entities.Concrete;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        IBrandDal _brandDal;
+        readonly IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandDal)
         {
@@ -25,6 +27,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
+            IResult result = BusinessRules.Run(CheckIfBrandExists(brand.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);
         }
@@ -35,6 +42,11 @@ namespace Business.Concrete
         }
         public IResult Update(Brand brand)
         {
+            IResult result = BusinessRules.Run(CheckIfBrandExists(brand.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
@@ -50,6 +62,17 @@ namespace Business.Concrete
         public IDataResult<Brand> GetById(int Id)
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(p => p.Id == Id));
+        }
+
+        private IResult CheckIfBrandExists(string name)
+        {
+            var result = _brandDal.GetAll(p => p.Name == name).Any();
+            if (result)
+            {
+                return new ErrorResult("Bu marka zaten var");
+            }
+            return new SuccessResult();
+
         }
     }
 }
