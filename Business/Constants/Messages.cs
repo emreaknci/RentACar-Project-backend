@@ -15,6 +15,8 @@ namespace Business.Constants
         public static string CarListed = "Araba listelendi";
         public static string CarDetailsListed = "Araba detayları listelendi";
         public static string CarNotAvailable = "Araba başka bir müşteri tarafından kiralandı";
+        public static string RentedCarsListed = "Kiralık arabalar listelendi";
+        public static string RentableCarsListed = "Kiralanabilir arabalar listelendi";
 
         public static string BrandAdded = "Marka eklendi";
         public static string BrandUpdated = "Marka güncellendi";
@@ -39,6 +41,8 @@ namespace Business.Constants
         public static string RentalDeleted = "Kiralama işlemi silindi";
         public static string RentalNotReturn = "Kiralık araç geri dönmedi";
         public static string RentalListed = "Kiralık araçlar listelendi";
+        public static string RentalNotExists = "Araç kiralık değil";
+        public static string CarAlreadyRented = "Araç zaten kiralanmış";
 
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerUpdated = "Müşteri bilgileri güncellendi";
@@ -65,5 +69,11 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
 
         public static string DescriptionAlreadyExists ="Bu başlıkta bir ilan zaten var";
+
+        public static string CardAdded = "Kredi kartı bilgileri eklendi";
+        public static string CardUpdated = "Kredi kartı bilgileri güncellendi";
+        public static string CardDeleted = "Kredi kartı bilgileri silindi";
+        public static string CardsListed = "Kredi kartları listelendi";
+
     }
 }

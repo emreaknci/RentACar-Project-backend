@@ -29,6 +29,12 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandAndColorId(int brandId, int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandId == brandId && c.ColorId == colorId), Messages.CarDetailsListed);
+
+        }
+
         [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
@@ -78,19 +84,30 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            if (DateTime.Now.Hour==18)
+            if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarsListed);
         }
+
+        public IDataResult<List<CarDetailDto>> GetRentalableCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetRentalableCarDetails(), Messages.RentableCarsListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetRentedCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetRentedCarDetails(), Messages.RentedCarsListed);
+        }
+
         public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandId(int id)
         {
-            if (DateTime.Now.Hour == 18)
+            if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c=>c.BrandId==id), Messages.CarListed);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandId == id), Messages.CarListed);
         }
         private IResult CheckIfDescriptionExists(string name)
         {
@@ -117,7 +134,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByColorId(int id)
         {
-            if (DateTime.Now.Hour == 18)
+            if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
@@ -126,7 +143,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByCarId(int id)
         {
-            if (DateTime.Now.Hour == 18)
+            if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }

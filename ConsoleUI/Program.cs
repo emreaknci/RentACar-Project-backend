@@ -56,14 +56,15 @@ namespace ConsoleUI
             //RentTest(rentals);
             //CutomerTest(customers);
             //UserTest(users);
-            ColorTest(colors);
+            //ColorTest(colors);
 
-            CarTest(cars);
+            //CarTest(cars);
             //BrandTest(brands);
 
             #region CarDetail
+
             //CarManager carManager = new CarManager(new EfCarDal());
-            //var result = carManager.GetCarDetails();
+            //var result = carManager.GetRentalDetails();
             //if (result.Success == true)
             //{
             //    foreach (var car in result.Data)
@@ -75,8 +76,11 @@ namespace ConsoleUI
             //{
             //    Console.WriteLine(result.Message);
             //}
+
             #endregion
+
             #region UserListed
+
             //UserManager userManager = new UserManager(new EfUserDal());
             //var result1 = userManager.GetAll();
             //if (result1.Success == true)
@@ -90,6 +94,7 @@ namespace ConsoleUI
             //{
             //    Console.WriteLine(result1.Message);
             //}
+
             #endregion
         }
 

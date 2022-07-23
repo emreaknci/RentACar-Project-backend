@@ -10,6 +10,8 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Utilities.Business;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -22,11 +24,24 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+
+
+        public IDataResult<List<RentalDetailsDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailsDto>>(_rentalDal.GetRentalDetails(), Messages.RentalListed);
+        }
+
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalAdded);
+            var result = BusinessRules.Run(CheckIfRentalExist(rental), IsCarReturned(rental));
+            if (result == null)
+            {
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalAdded);
+            }
+
+            return result;
         }
         public IResult Delete(Rental rental)
         {
@@ -39,9 +54,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
         }
 
+
         public IDataResult<List<Rental>> GetAll()
         {
-            if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 20)
             {
                 return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
             }
@@ -55,6 +71,39 @@ namespace Business.Concrete
         public IDataResult<Rental> GetByRentalId(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId));
+        }
+
+
+        private IResult CheckIfRentalExist(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r => r.Id == rental.Id).Count;
+            if (result != 0)
+            {
+                return new ErrorResult(Messages.CarAlreadyRented);
+            }
+
+            return new SuccessResult();
+        }
+        private IResult IsCarReturned(Rental rental)
+        {
+            var result = _rentalDal.Get(r => r.CarId == rental.CarId);
+            if (result != null)
+            {
+                if (result.ReturnDate > rental.RentDate)
+                {
+                    return new ErrorResult(Messages.CarAlreadyRented);
+                }
+
+            }
+
+            return new SuccessResult(Messages.RentalNotReturn);
+        }
+        public IDataResult<Rental> IsRentable(int carId)
+        {
+            var rental = _rentalDal.Get(p => p.CarId == carId);
+            return rental != null ?
+                (IDataResult<Rental>)new ErrorDataResult<Rental>(rental,"Araba zaten Kiralık")
+                : new SuccessDataResult<Rental>("Kiralanabilir");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class RentalsController : ControllerBase
     {
-        IRentalService _rentalService;
+        readonly IRentalService _rentalService;
 
         public RentalsController(IRentalService rentalService)
         {
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getcarsbybrandid")]
+        [HttpGet("getcarsbycustomerid")]
         public IActionResult GetByCustomerdId(int id)
         {
             var result = _rentalService.GetByCustomerId(id);
@@ -40,8 +40,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getcarsbycolorid")]
-        public IActionResult GetCarsByRentalId(int id)
+        [HttpGet("getrentalbycarid")]
+        public IActionResult GetRentalByCarId(int id)
         {
             var result = _rentalService.GetByRentalId(id);
             if (result.Success)
@@ -50,9 +50,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getcardetails")]
 
+        [HttpGet("isrentable")]
+        public IActionResult IsRentable(int carId)
+        {
+            var result = _rentalService.IsRentable(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
 
+            return BadRequest(result);
+        }
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {
@@ -77,6 +86,17 @@ namespace WebAPI.Controllers
         public IActionResult Update(Rental rental)
         {
             var result = _rentalService.Update(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getrentaldetails")]
+        public IActionResult GetRentalDetails()
+        {
+            var result = _rentalService.GetRentalDetails();
             if (result.Success)
             {
                 return Ok(result);
