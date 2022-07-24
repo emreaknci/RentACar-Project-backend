@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarImagesController : Controller
     {
-        private ICarImageService _carImageService;
+        private readonly ICarImageService _carImageService;
 
         public CarImagesController(ICarImageService carImageService)
         {
@@ -26,24 +26,41 @@ namespace WebAPI.Controllers
         {
             var result = _carImageService.Add(file, carImage);
 
-            if (result.Success) { return Ok(result); }
+            if (result.Success)
+            {
+                return Ok(result);
+            }
             return BadRequest(result);
         }
 
+        //[HttpPost("delete")]
+        //public IActionResult Delete([FromForm(Name = ("Id"))] int id)
+        //{
+        //    var carImage = _carImageService.GetById(id).Data;
+        //    var result = _carImageService.Delete(carImage);
+
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
+        //}
         [HttpPost("delete")]
-        public IActionResult Delete([FromForm(Name = ("Id"))] int id)
+        public IActionResult Delete(CarImage carImage)
         {
-            var carImage = _carImageService.GetById(id).Data;
             var result = _carImageService.Delete(carImage);
 
-            if (result.Success) { return Ok(result); }
+            if (result.Success)
+            {
+                return Ok(result);
+            }
             return BadRequest(result);
         }
 
         [HttpGet("getimagesbycarid")]
-        public IActionResult GetImagesByCarId(int carId)
+        public IActionResult GetImagesByCarId(int id)
         {
-            var result = _carImageService.GetImagesByCarId(carId);
+            var result = _carImageService.GetImagesByCarId(id);
 
             if (result.Success) { return Ok(result); }
             return BadRequest(result);

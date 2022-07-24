@@ -22,7 +22,7 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        private readonly ICarDal _carDal;
 
         public CarManager(ICarDal carDal)
         {
@@ -35,7 +35,7 @@ namespace Business.Concrete
 
         }
 
-        [SecuredOperation("car.add,admin")]
+        //[SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
@@ -48,6 +48,7 @@ namespace Business.Concrete
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -76,6 +77,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == Id));
         }
+
+        public IDataResult<Car> GetById(int Id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == Id));
+        }
+
         public IDataResult<List<Car>> GetCarsByColorId(int Id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == Id));
@@ -119,6 +126,11 @@ namespace Business.Concrete
             return new SuccessResult();
 
         }
+        private IResult CheckIfCarExist(int carId)
+        {
+            var car = _carDal.Get(p => p.Id == carId);
+            return car == null ? (IResult)new ErrorResult(Messages.CarDoesntExist) : new SuccessResult();
+        }
 
         [TransactionScopeAspect]
         public IResult AddTransactionalTest(Car car)
@@ -143,6 +155,11 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByCarId(int id)
         {
+            if (_carDal.Get(p => p.Id == id) == null)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.CarDoesntExist);
+            }
+
             if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);

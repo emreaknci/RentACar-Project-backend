@@ -13,6 +13,8 @@ namespace Business.Constants
         public static string CarPriceInvalid = "Araba kira ücreti  0'dan büyük olmalı";
         public static string CarsListed = "Arabalar listelendi";
         public static string CarListed = "Araba listelendi";
+        public static string CarDoesntExist = "Böyle bir araba mevcut değil";
+
         public static string CarDetailsListed = "Araba detayları listelendi";
         public static string CarNotAvailable = "Araba başka bir müşteri tarafından kiralandı";
         public static string RentedCarsListed = "Kiralık arabalar listelendi";
@@ -57,6 +59,7 @@ namespace Business.Constants
         public static string CarImageDeleted = "Araç fotoğrafı silindi";
         public static string CarImagesListed = "Fotoğraflar listelendi";
         public static string CarImageUpdated = "Fotoğraflar güncellendi";
+        public static string CarImagesNotFound= "Bu araca ait herhangi bir fotoğraf bulunamadı";
 
         public static string AuthorizationDenied = "Yetkiniz yok.";
         public static string UserRegistered = "Kayıt başarılı.";
