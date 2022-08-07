@@ -53,7 +53,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Color>> GetAll()
         {
-            if (DateTime.Now.Hour == 20)
+            if (DateTime.Now.Hour == 5)
             {
                 return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
             }

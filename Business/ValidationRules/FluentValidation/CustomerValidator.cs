@@ -10,7 +10,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CustomerValidator()
         {
-            RuleFor(p => p.CompanyName).NotEmpty().MinimumLength(3);
+            RuleFor(p => p.CompanyName).NotEmpty().WithMessage("Şirket adı alanı boş bırakılamaz.")
+                .MinimumLength(3).WithMessage("Şirket adı minimum 3 karakterden oluşmalı.");
         }
     }
 }

@@ -99,12 +99,14 @@ namespace WebAPI.Controllers
             Thread.Sleep(500);
 
             var result = _carService.GetCarDetails();
+
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+
         [HttpGet("getcarsbybrandidandcolorid")]
         public IActionResult GetCarsByBrandAndColorId(int brandId, int colorId)
         {

@@ -14,6 +14,8 @@ namespace Business.Abstract
         IDataResult<List<CreditCard>> GetAll();
         IDataResult<CreditCard> GetById(int id);
         IDataResult<CreditCard> GetByCardNumber(string cardNumber);
-        IDataResult<CreditCard> GetByCustomerId(int id);
+        IDataResult<List<CreditCard>> GetByCustomerId(int id);
+        IDataResult<List<CreditCard>> GetByCustomerMail(string email);
+
     }
 }

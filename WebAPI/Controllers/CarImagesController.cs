@@ -33,18 +33,6 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        //[HttpPost("delete")]
-        //public IActionResult Delete([FromForm(Name = ("Id"))] int id)
-        //{
-        //    var carImage = _carImageService.GetById(id).Data;
-        //    var result = _carImageService.Delete(carImage);
-
-        //    if (result.Success)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return BadRequest(result);
-        //}
         [HttpPost("delete")]
         public IActionResult Delete(CarImage carImage)
         {

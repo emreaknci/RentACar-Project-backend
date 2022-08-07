@@ -10,6 +10,7 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -54,6 +55,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(_customerDal.Get(c => c.UserId == customerId));
         }
 
-       
+        public IDataResult<CustomerDetailDto> GetCustomerWithDetail(string email)
+        {
+            return new SuccessDataResult<CustomerDetailDto>(_customerDal.GetCustomersWithDetail(email));
+        }
     }
 }

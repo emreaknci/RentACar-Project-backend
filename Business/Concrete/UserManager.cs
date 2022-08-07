@@ -15,8 +15,7 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-
-        IUserDal _userDal;
+        readonly IUserDal _userDal;
         public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
@@ -39,6 +38,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        public IResult UserExists(string email)
+        {
+            if (_userDal.Get(u=>u.Email==email) != null)
+            {
+                return new ErrorResult(Messages.UserAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
         public IDataResult<List<User>> GetAll()
         {
             if (DateTime.Now.Hour == 22)
@@ -53,9 +61,14 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == Id));
         }
 
-        public User GetByMail(string email)
+        public IDataResult<User> GetByMail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            var user = _userDal.Get(u => u.Email == email);
+            if (user == null)
+            {
+                return new ErrorDataResult<User>(Messages.UserNotFound);
+            }
+            return new SuccessDataResult<User>(user);
         }
 
         public List<OperationClaim> GetClaims(User user)

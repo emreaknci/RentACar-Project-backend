@@ -14,10 +14,12 @@ namespace Business.Concrete
     public class PaymentManager : IPaymentService
     {
         private readonly IPaymentDal _paymentDal;
+        private readonly IUserService _userService;
 
-        public PaymentManager(IPaymentDal paymentDal)
+        public PaymentManager(IPaymentDal paymentDal, IUserService userService)
         {
             _paymentDal = paymentDal;
+            _userService = userService;
         }
 
         [ValidationAspect(typeof(CreditCardValidator))]
@@ -55,10 +57,15 @@ namespace Business.Concrete
             return new SuccessDataResult<CreditCard>(_paymentDal.Get(p => p.CardNumber == cardNumber), "geldi");
         }
 
-        public IDataResult<CreditCard> GetByCustomerId(int id)
+        public IDataResult<List<CreditCard>> GetByCustomerId(int id)
         {
-            return new SuccessDataResult<CreditCard>(_paymentDal.Get(p => p.CustomerId==id));
+            return new SuccessDataResult<List<CreditCard>>(_paymentDal.GetAll(p => p.CustomerId==id));
+        }
 
+        public IDataResult<List<CreditCard>> GetByCustomerMail(string email)
+        {
+            var user = _userService.GetByMail(email);
+            return new SuccessDataResult<List<CreditCard>>(_paymentDal.GetAll(p => p.CustomerId == user.Data.Id));
         }
     }
 }
